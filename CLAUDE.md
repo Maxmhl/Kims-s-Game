@@ -30,3 +30,10 @@ Gradle Kotlin DSL mit Version Catalog (`gradle/libs.versions.toml`) · minSdk 26
 - Release-APK: `./gradlew :app:assembleRelease` mit `keystore.properties` (storeFile, storePassword, keyAlias, keyPassword)
   oder den Umgebungsvariablen `KEYSTORE_PATH`, `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`. Keystores gehören nie ins Repo.
 - Assets neu erzeugen: `python3 tools/gen_assets.py <Ordner mit Material-Symbols-SVGs>` (Icons, Katalog, `IconRegistry`).
+
+## UI-Tests (Robolectric, ohne Emulator)
+`app/src/test/.../ui/AppFlowUiTest.kt` spielt per Compose-Test auf der JVM den Kim-Rundenablauf (alle Modi), eine
+Leitner-Abfrage, Abbruch, Statistik und Profil durch; `ScreenshotTest` schreibt Screenshots nach `app/build/screenshots`.
+Läuft Maven Central im Rate-Limit (HTTP 429), die Robolectric-Laufzeiten (`android-all-instrumented-15-robolectric-12650502-i7.jar`)
+vorab in einen Ordner laden und `./gradlew -Drobolectric.dependency.dir=<Ordner> :app:testDebugUnitTest` starten.
+Instrumentierte Tests auf einem Gerät gibt es bisher nicht.

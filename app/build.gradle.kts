@@ -34,7 +34,7 @@ android {
         val storePath = signingValue("storeFile", "KEYSTORE_PATH")
         if (storePath != null) {
             create("release") {
-                storeFile = rootProject.file(storePath)
+                storeFile = file(storePath)
                 storePassword = signingValue("storePassword", "KEYSTORE_PASSWORD")
                 keyAlias = signingValue("keyAlias", "KEY_ALIAS")
                 keyPassword = signingValue("keyPassword", "KEY_PASSWORD")
@@ -62,7 +62,18 @@ android {
         // Versionen sind bewusst festgelegt; lange Vektorpfade stammen aus Material Symbols.
         disable += setOf("GradleDependency", "AndroidGradlePluginVersion", "VectorPath", "PluralsCandidate")
     }
-    testOptions { unitTests.isReturnDefaultValues = true }
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+        // Robolectric: UI-Tests mit Compose laufen auf der JVM (kein Emulator nötig).
+        unitTests.isIncludeAndroidResources = true
+        // Offline-Betrieb von Robolectric ist über -Probolectric.dependency.dir=<Ordner> möglich (siehe CLAUDE.md).
+        unitTests.all { test ->
+            System.getProperty("robolectric.dependency.dir")?.let {
+                test.systemProperty("robolectric.dependency.dir", it)
+                test.systemProperty("robolectric.offline", "true")
+            }
+        }
+    }
 }
 
 dependencies {
@@ -92,7 +103,16 @@ dependencies {
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.androidx.test.ext.junit)
+    testImplementation(platform(libs.androidx.compose.bom))
+    testImplementation(libs.androidx.compose.ui.test.junit4)
+    testImplementation(libs.hilt.android.testing)
+    kspTest(libs.hilt.compiler)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hilt.compiler)
 }

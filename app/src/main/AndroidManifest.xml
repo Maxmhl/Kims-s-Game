@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Einzige Berechtigung der App: Mitteilungen für die tägliche Lernkartei-Erinnerung. -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!--
+        WorkManager bringt weitere Berechtigungen mit. Die App braucht sie nicht (nur ein einfacher, zeitversetzter Job
+        ohne Netzwerk-Bedingung, JobScheduler überlebt Neustarts), daher entfernen: Spezifikation = nur Benachrichtigungen.
+    -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" tools:node="remove" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:node="remove" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" tools:node="remove" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" tools:node="remove" />
 
     <application
         android:name=".GedaechtnisApp"
