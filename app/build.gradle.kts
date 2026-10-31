@@ -59,6 +59,8 @@ android {
     lint {
         warningsAsErrors = false
         abortOnError = true
+        // Versionen sind bewusst festgelegt; lange Vektorpfade stammen aus Material Symbols.
+        disable += setOf("GradleDependency", "AndroidGradlePluginVersion", "VectorPath", "PluralsCandidate")
     }
     testOptions { unitTests.isReturnDefaultValues = true }
 }

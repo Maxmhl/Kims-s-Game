@@ -58,5 +58,19 @@ for cat, bases in CATEGORIES.items():
                 "variant": "standard", "color": c, "icon": f"ic_{base}", "group": cat,
                 "rotatable": base not in NOT_ROTATABLE,
             })
+seen = sorted({e["icon"] for e in catalog})
+reg = ["package de.max.gedaechtnis.core", "", "import de.max.gedaechtnis.R", "",
+       "/** Erzeugt von tools/gen_assets.py: Katalog-Icon-Name -> Vector Drawable. */",
+       "object IconRegistry {", "    val icons: Map<String, Int> = mapOf("]
+reg += [f'        "{i}" to R.drawable.{i},' for i in seen]
+reg += ["    )", "}", ""]
+(ROOT / "app/src/main/java/de/max/gedaechtnis/core/IconRegistry.kt").write_text("\n".join(reg))
 (ASSETS / "catalog.json").write_text(json.dumps(catalog, ensure_ascii=False, indent=1))
+# UI-Icons (ui_*.xml) für Navigation und Buttons
+UI_ICONS = ["arrow_back", "close", "settings", "add", "home", "bar_chart", "style", "person", "check",
+            "extension", "backspace", "delete", "notifications", "volume_up", "schedule"]
+for n in UI_ICONS:
+    svg = (SRC / f"{n}.svg").read_text()
+    d = re.search(r'<path d="([^"]+)"', svg).group(1)
+    (RES / f"ui_{n}.xml").write_text(XML.replace("{d}", d).replace('"40dp"', '"24dp"'))
 print(len(catalog), "Objekte")

@@ -13,6 +13,8 @@ data class CsvResult(
 
 /** CSV-Import im Format `Vorderseite;Rückseite`, UTF-8, erste Zeile darf Kopfzeile sein. */
 object CsvImport {
+    private val BOM = Char(0xFEFF).toString()
+
 
     fun decode(bytes: ByteArray): String {
         val decoder = Charsets.UTF_8.newDecoder()
@@ -23,14 +25,14 @@ object CsvImport {
         } catch (e: CharacterCodingException) {
             String(bytes, Charsets.ISO_8859_1) // Excel-Export (Windows-1252/Latin-1)
         }
-        return text.removePrefix("﻿")
+        return text.removePrefix(BOM)
     }
 
     fun parse(bytes: ByteArray, existingFronts: Set<String> = emptySet()): CsvResult =
         parse(decode(bytes), existingFronts)
 
     fun parse(text: String, existingFronts: Set<String> = emptySet()): CsvResult {
-        val rows = splitRows(text.removePrefix("﻿"))
+        val rows = splitRows(text.removePrefix(BOM))
         val seen = existingFronts.map { it.trim().lowercase() }.toMutableSet()
         val cards = mutableListOf<Pair<String, String>>()
         var dup = 0
