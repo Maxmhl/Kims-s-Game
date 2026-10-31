@@ -1,0 +1,4 @@
+-keepclassmembers class * { @kotlinx.serialization.Serializable *; }
+-keep,includedescriptorclasses class de.max.gedaechtnis.**$$serializer { *; }
+-keepclassmembers class de.max.gedaechtnis.** { *** Companion; }
+-keepclasseswithmembers class de.max.gedaechtnis.** { kotlinx.serialization.KSerializer serializer(...); }

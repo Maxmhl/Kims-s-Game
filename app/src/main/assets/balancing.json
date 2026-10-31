@@ -1,0 +1,45 @@
+{
+  "levels": [
+    { "level": 1, "objectsMin": 8, "objectsMax": 8, "memorizeSec": 30, "changesMin": 1, "changesMax": 1,
+      "changeTypes": ["REMOVED"], "similarity": 0.0, "pauseSec": 3, "distraction": "NONE", "answerSec": null,
+      "falseClickPenalty": false, "unknownCount": false, "exactPositions": false, "oneErrorLosesRound": false,
+      "fakeCount": 0, "factor": 1.0, "sequenceLength": 4, "sequenceItemMs": 1500, "reverseSequence": false },
+    { "level": 2, "objectsMin": 12, "objectsMax": 12, "memorizeSec": 25, "changesMin": 2, "changesMax": 2,
+      "changeTypes": ["REMOVED"], "similarity": 0.15, "pauseSec": 5, "distraction": "NONE", "answerSec": 30,
+      "falseClickPenalty": false, "unknownCount": false, "exactPositions": false, "oneErrorLosesRound": false,
+      "fakeCount": 0, "factor": 1.3, "sequenceLength": 5, "sequenceItemMs": 1300, "reverseSequence": false },
+    { "level": 3, "objectsMin": 16, "objectsMax": 16, "memorizeSec": 20, "changesMin": 3, "changesMax": 3,
+      "changeTypes": ["REMOVED", "SWAPPED"], "similarity": 0.35, "pauseSec": 10, "distraction": "CALC", "answerSec": 30,
+      "falseClickPenalty": true, "unknownCount": false, "exactPositions": false, "oneErrorLosesRound": false,
+      "fakeCount": 0, "factor": 1.6, "sequenceLength": 6, "sequenceItemMs": 1100, "reverseSequence": false },
+    { "level": 4, "objectsMin": 20, "objectsMax": 20, "memorizeSec": 15, "changesMin": 4, "changesMax": 4,
+      "changeTypes": ["REMOVED", "SWAPPED", "REPLACED", "RECOLORED", "ROTATED"], "similarity": 0.6, "pauseSec": 20, "distraction": "MIXED", "answerSec": 30,
+      "falseClickPenalty": true, "unknownCount": true, "exactPositions": false, "oneErrorLosesRound": false,
+      "fakeCount": 0, "factor": 2.0, "sequenceLength": 7, "sequenceItemMs": 1000, "reverseSequence": true },
+    { "level": 5, "objectsMin": 25, "objectsMax": 25, "memorizeSec": 10, "changesMin": 5, "changesMax": 6,
+      "changeTypes": ["REMOVED", "SWAPPED", "REPLACED", "RECOLORED", "ROTATED"], "similarity": 0.8, "pauseSec": 30, "distraction": "DOUBLE", "answerSec": 30,
+      "falseClickPenalty": true, "unknownCount": true, "exactPositions": true, "oneErrorLosesRound": false,
+      "fakeCount": 0, "factor": 2.5, "sequenceLength": 8, "sequenceItemMs": 900, "reverseSequence": true },
+    { "level": 6, "objectsMin": 30, "objectsMax": 40, "memorizeSec": 8, "changesMin": 0, "changesMax": 8,
+      "changeTypes": ["REMOVED", "SWAPPED", "REPLACED", "RECOLORED", "ROTATED", "FAKE"], "similarity": 1.0, "pauseSec": 60, "distraction": "MIXED", "answerSec": 30,
+      "falseClickPenalty": true, "unknownCount": true, "exactPositions": true, "oneErrorLosesRound": true,
+      "fakeCount": 2, "factor": 3.0, "sequenceLength": 9, "sequenceItemMs": 800, "reverseSequence": true }
+  ],
+  "promotion": { "rounds": 5, "minAccuracy": 0.85 },
+  "demotion": { "rounds": 3, "maxAccuracy": 0.5 },
+  "adaptive": { "min": 1.0, "max": 10.0, "start": 3.0, "upAccuracy": 0.8, "upRounds": 2, "upStep": 0.3, "downAccuracy": 0.6, "downStep": 0.5 },
+  "scoring": { "hit": 10, "falseClick": 15, "missed": 5, "timeBonus": 0.2 },
+  "grid": { "columnsSmall": 4, "columnsMedium": 5, "columnsLarge": 6, "mediumFrom": 21, "largeFrom": 30, "minCellDp": 48, "gapDp": 8, "marginDp": 20 },
+  "reconstruction": { "testFraction": 0.5, "minTested": 3, "maxTested": 12 },
+  "distraction": {
+    "taskSeconds": 4, "feedbackMs": 900, "reactionMinMs": 1000, "reactionMaxMs": 4000, "countSteps": 5,
+    "retries": 200, "calcMin": 2, "calcMax": 99, "calcMaxResult": 200, "calcSmallFactor": 12, "stroopWords": 4
+  },
+  "session": { "backgroundGraceMs": 3000, "dailyLevelFromAdaptive": true },
+  "leitner": {
+    "NORMAL": { "boxes": 5, "intervals": [1, 2, 4, 8, 16], "onError": "BACK_ONE", "typed": false, "bothDirections": false, "timeLimitSec": null },
+    "STRICT": { "boxes": 5, "intervals": [1, 3, 7, 14, 30], "onError": "TO_FIRST", "typed": false, "bothDirections": true, "timeLimitSec": null },
+    "HARD":   { "boxes": 7, "intervals": [1, 2, 4, 8, 16, 32, 64], "onError": "TO_FIRST", "typed": true, "bothDirections": false, "timeLimitSec": 15 }
+  },
+  "leitnerDefaultMode": "STRICT"
+}
